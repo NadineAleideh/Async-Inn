@@ -4,7 +4,7 @@
 
 
 ### | Lab     | Subject | Date     |
-### | :---:   |   :----:    |  :---:        |
+### | ---   |   ----    |  ---        |
 ### | 11      | Databases and ERDs       | 16/7/2023   |
 ### | 12   | Intro to Entity Framework        | 19/7/2023      |
 ### | 13   | Dependency Injection        | 23/7/2023      |
