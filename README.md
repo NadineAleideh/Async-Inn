@@ -43,6 +43,7 @@ Explanation of the Tables:
 5. **RoomAmenities**:
    - Acts as a pure join table to establish a many-to-many relationship between rooms and amenities.
    - Attributes: room_id (PK, FK), amenity_id (PK, FK)
+
    
 ## architecture 
 
@@ -60,3 +61,4 @@ Explanation of the Tables:
 ![Async Inn](./assets/GetAmenity.PNG)
 ![Async Inn](./assets/PostHotel.PNG)
 ![Async Inn](./assets/DeleteHotel.PNG)
+
