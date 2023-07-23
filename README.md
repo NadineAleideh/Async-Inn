@@ -1,4 +1,4 @@
-## Projec : API server for AsyncInn Hotel Asset Management System :house_with_garden:
+## Project : API server for AsyncInn Hotel Asset Management System :house_with_garden:
 
 ### Author: Nadine Aleideh :cancer:
 
