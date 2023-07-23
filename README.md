@@ -1,13 +1,13 @@
-## Projec : API server for AsyncInn Hotel Asset Management System :house_with_garden:
+## Project : API server for AsyncInn Hotel Asset Management System :house_with_garden:
 
 ### Author: Nadine Aleideh :cancer:
 
 
-###| Lab     | Subject | Date     |
-###| :---:   |   :----:    |  :---:        |
-###| 11      | Databases and ERDs       | 16/7/2023   |
-###| 12   | Intro to Entity Framework        | 19/7/2023      |
-###| 13   | Dependency Injection        | 23/7/2023      |
+| Lab  |  | Date     |
+| ---- |   -----    |  -----   |
+| 11  | Databases and ERDs | 16/7/2023  |
+| 12  | Intro to Entity Framework | 19/7/2023 |
+| 13  | Dependency Injection | 23/7/2023      |
 
 ## Description
 
@@ -47,11 +47,11 @@ Explanation of the Tables:
    
 ## architecture 
 
-- 3 esstinal models (Hotels, Rooms, and Amenities).
-- 3 Interfaces for evry model.
-- service for each of the controllers that implement the appropriate interface.
-- CRUD operations for evry class.
-- I Update the Controller to use the appropriate method from the interface rather than the DBContext directly.
+- :heavy_check_mark: 3 esstinal models (Hotels, Rooms, and Amenities).
+- :heavy_check_mark: 3 Interfaces for every model.
+- :heavy_check_mark: service for each of the controllers that implement the appropriate interface.
+- :heavy_check_mark: CRUD operations for evry class.
+- :heavy_check_mark: I Update the Controller to use the appropriate method from the interface rather than the DBContext directly.
 
 ## API Requests (CRUD operations)
 
