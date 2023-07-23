@@ -1,12 +1,18 @@
-**Project Name:** Async Inn Hotel Asset Management System
+## Projec : API server for AsyncInn Hotel Asset Management System :house_with_garden:
 
-**Author:** Nadine Aleideh
+### Author: Nadine Aleideh :cancer:
 
-**Date:** 16/7/2023
+
+###| Lab     | Subject | Date     |
+###| :---:   |   :----:    |  :---:        |
+###| 11      | Databases and ERDs       | 16/7/2023   |
+###| 12   | Intro to Entity Framework        | 19/7/2023      |
+###| 13   | Dependency Injection        | 23/7/2023      |
 
 ## Description
 
 The Async Inn Hotel Asset Management System is a web-based API designed to help Async Inn, a local hotel chain, better manage their hotel assets across multiple locations. This project aims to provide a RESTful API server that allows the management of rooms, amenities, and new hotel locations. The system leverages a relational database to store and maintain the integrity of the data.
+
 
 ## ERD Diagram
 
@@ -37,3 +43,20 @@ Explanation of the Tables:
 5. **RoomAmenities**:
    - Acts as a pure join table to establish a many-to-many relationship between rooms and amenities.
    - Attributes: room_id (PK, FK), amenity_id (PK, FK)
+   
+## architecture 
+
+- 3 esstinal models (Hotels, Rooms, and Amenities).
+- 3 Interfaces for evry model.
+- service for each of the controllers that implement the appropriate interface.
+- CRUD operations for evry class.
+- I Update the Controller to use the appropriate method from the interface rather than the DBContext directly.
+
+## API Requests (CRUD operations)
+
+![Async Inn](./assets/GetRooms.PNG)
+![Async Inn](./assets/GetRoom.PNG)
+![Async Inn](./assets/GetAmenities.PNG)
+![Async Inn](./assets/GetAmenity.PNG)
+![Async Inn](./assets/PostHotel.PNG)
+![Async Inn](./assets/DeleteHotel.PNG)
