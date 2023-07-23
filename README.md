@@ -3,7 +3,7 @@
 ### Author: Nadine Aleideh :cancer:
 
 
-| Lab  | Date     |
+| Lab  |  | Date     |
 | ---- |   -----    |  -----   |
 | 11  | Databases and ERDs | 16/7/2023  |
 | 12  | Intro to Entity Framework | 19/7/2023 |
