@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Async_Inn.Data
 {
-    public class AsyncInnDbContext : DbContext
+    public class AsyncInnDbContext : DbContext // it's a bradige between our app and the DB , allowing us to interacte with the DB. entry point for interacting with the db to perform operations 
     {
         public AsyncInnDbContext(DbContextOptions options) : base(options)
         {
@@ -27,7 +27,7 @@ namespace Async_Inn.Data
                 new Amenity() { Id = 3, Name = "Sea View" });
         }
 
-        public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Hotel> Hotels { get; set; } // correspond to db tables
         public DbSet<Room> Rooms { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }
         public DbSet<RoomAmenities> RoomAmenities { get; set; }
