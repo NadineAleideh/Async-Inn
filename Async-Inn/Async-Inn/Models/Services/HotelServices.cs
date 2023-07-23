@@ -46,13 +46,22 @@ namespace Async_Inn.Models.Services
 
         public async Task<Hotel> UpdateHotel(int id, Hotel hotel)
         {
-            hotel = await GetHotel(id);
+            var oldhotel = await GetHotel(id);
 
-            _hotel.Entry<Hotel>(hotel).State = EntityState.Modified;
+            if (oldhotel != null)
+            {
+                oldhotel.Name = hotel.Name;
+                oldhotel.StreetAddress = hotel.StreetAddress;
+                oldhotel.City = hotel.City;
+                oldhotel.State = hotel.State;
+                oldhotel.Country = hotel.Country;
+                oldhotel.Phone = hotel.Phone;
 
-            await _hotel.SaveChangesAsync();
+                await _hotel.SaveChangesAsync();
+            }
 
-            return hotel;
+
+            return oldhotel;
         }
     }
 }
