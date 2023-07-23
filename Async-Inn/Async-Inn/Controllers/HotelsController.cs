@@ -25,10 +25,10 @@ namespace Async_Inn.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
         {
-          if (_context.Hotels == null)
-          {
-              return NotFound();
-          }
+            if (_context.Hotels == null)
+            {
+                return NotFound();
+            }
             return await _context.Hotels.ToListAsync();
         }
 
@@ -36,10 +36,10 @@ namespace Async_Inn.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Hotel>> GetHotel(int id)
         {
-          if (_context.Hotels == null)
-          {
-              return NotFound();
-          }
+            if (_context.Hotels == null)
+            {
+                return NotFound();
+            }
             var hotel = await _context.Hotels.FindAsync(id);
 
             if (hotel == null)
@@ -86,10 +86,10 @@ namespace Async_Inn.Controllers
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
         {
-          if (_context.Hotels == null)
-          {
-              return Problem("Entity set 'AsyncInnDbContext.Hotels'  is null.");
-          }
+            if (_context.Hotels == null)
+            {
+                return Problem("Entity set 'AsyncInnDbContext.Hotels'  is null.");
+            }
             _context.Hotels.Add(hotel);
             await _context.SaveChangesAsync();
 
