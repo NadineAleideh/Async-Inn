@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Async_Inn.Migrations
 {
     [DbContext(typeof(AsyncInnDbContext))]
-    [Migration("20230719190541_one")]
+    [Migration("20230723135220_one")]
     partial class one
     {
         /// <inheritdoc />
@@ -78,31 +78,6 @@ namespace Async_Inn.Migrations
                     b.ToTable("Hotels");
                 });
 
-            modelBuilder.Entity("Async_Inn.Models.HotelRoom", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("PetFriendly")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("RoomID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HotelRooms");
-                });
-
             modelBuilder.Entity("Async_Inn.Models.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -121,22 +96,6 @@ namespace Async_Inn.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
-                });
-
-            modelBuilder.Entity("Async_Inn.Models.RoomAmenities", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("RoomID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoomAmenities");
                 });
 #pragma warning restore 612, 618
         }

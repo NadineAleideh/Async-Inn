@@ -24,22 +24,6 @@ namespace Async_Inn.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HotelRooms",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoomNumber = table.Column<int>(type: "int", nullable: false),
-                    RoomID = table.Column<int>(type: "int", nullable: false),
-                    Rate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PetFriendly = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HotelRooms", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Hotels",
                 columns: table => new
                 {
@@ -55,19 +39,6 @@ namespace Async_Inn.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Hotels", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RoomAmenities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoomID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoomAmenities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,13 +63,7 @@ namespace Async_Inn.Migrations
                 name: "Amenities");
 
             migrationBuilder.DropTable(
-                name: "HotelRooms");
-
-            migrationBuilder.DropTable(
                 name: "Hotels");
-
-            migrationBuilder.DropTable(
-                name: "RoomAmenities");
 
             migrationBuilder.DropTable(
                 name: "Rooms");

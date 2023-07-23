@@ -46,13 +46,18 @@ namespace Async_Inn.Models.Services
 
         public async Task<Room> UpdateRoom(int id, Room room)
         {
-            room = await GetRoom(id);
+            var oldroom = await GetRoom(id);
 
-            _room.Entry(room).State = EntityState.Modified;
+            if (oldroom != null)
+            {
+                oldroom.Name = room.Name;
+                oldroom.Layout = room.Layout;
 
-            await _room.SaveChangesAsync();
+                await _room.SaveChangesAsync();
+            }
 
-            return room;
+
+            return oldroom;
         }
     }
 }
