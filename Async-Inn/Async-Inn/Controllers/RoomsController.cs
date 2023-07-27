@@ -26,22 +26,25 @@ namespace Async_Inn.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
         {
-            if (_context == null)
+            var room = await _context.GetRooms();
+            if (room == null || room.Count == 0)
             {
                 return NotFound();
             }
-            return await _context.GetRooms();
+            return Ok(room.ToList());
         }
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Room>> GetRoom(int id)
         {
-            if (_context == null)
+            var room = await _context.GetRoom(id);
+
+            if (room == null)
             {
                 return NotFound();
             }
-            var room = await _context.GetRoom(id);
+
 
             return Ok(room);
         }
@@ -70,16 +73,18 @@ namespace Async_Inn.Controllers
             {
                 return Problem("Entity set 'AsyncInnDbContext.Rooms'  is null.");
             }
-            await _context.CreateRoom(room);
+            var createdRoom = await _context.CreateRoom(room);
 
-            return CreatedAtAction("GetRoom", new { id = room.Id }, room);
+            return CreatedAtAction("GetRoom", new { id = createdRoom.Id }, createdRoom);
         }
 
         // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoom(int id)
         {
-            if (_context == null)
+            var room = await _context.GetRoom(id);
+
+            if (room == null)
             {
                 return NotFound();
             }
@@ -87,6 +92,42 @@ namespace Async_Inn.Controllers
 
             return NoContent();
         }
+
+        //Adds an amenity to a room
+
+
+        [HttpPost("{roomId}/Amenity/{amenityId}")]
+        public async Task<IActionResult> AddAmenityToRoom(int roomId, int amenityId)
+        {
+            try
+            {
+                await _context.AddAmenityToRoom(roomId, amenityId);
+                return Ok("Amenity added to the room successfully !");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        //removes an amenity from a room
+        [HttpDelete("{roomId}/Amenity/{amenityId}")]
+        public async Task<IActionResult> RemoveAmenityFromRoom(int roomId, int amenityId)
+        {
+            try
+            {
+                await _context.RemoveAmenityFromRoom(roomId, amenityId);
+                return Ok("Amenity removed succsessfully !");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
 
     }
 }
