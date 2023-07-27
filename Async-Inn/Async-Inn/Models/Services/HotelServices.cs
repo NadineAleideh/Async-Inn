@@ -59,9 +59,20 @@ namespace Async_Inn.Models.Services
 
                 await _hotel.SaveChangesAsync();
             }
-
-
             return oldhotel;
         }
+
+
+        // stretch goal : Add the ability within your HotelController to “find a hotel by name”.
+        public async Task<Hotel> GetHotelByName(string name)
+        {
+
+            var hotels = await _hotel.Hotels.ToListAsync();
+
+            return hotels.FirstOrDefault(h => h.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
     }
+
+
 }
+

@@ -7,5 +7,7 @@
         Task<List<Hotel>> GetHotels();
         Task<Hotel> UpdateHotel(int Id, Hotel hotel);
         Task DeleteHotel(int Id);
+
+        Task<Hotel> GetHotelByName(string name);
     }
 }

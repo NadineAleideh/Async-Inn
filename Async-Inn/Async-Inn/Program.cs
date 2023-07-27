@@ -15,6 +15,9 @@ namespace Async_Inn
 
             builder.Services.AddControllers();
 
+            builder.Services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 
             string? connString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services

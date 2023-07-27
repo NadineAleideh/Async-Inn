@@ -96,5 +96,22 @@ namespace Async_Inn.Controllers
         }
 
 
+        // GET: api/Hotels? name = {name}
+        [HttpGet("ByName/{name}")]
+
+        public async Task<ActionResult<Hotel>> FindHotelByName(string name)
+        {
+
+            var foundhotel = await _context.GetHotelByName(name);
+
+            if (foundhotel == null)
+            {
+                return NotFound();
+            }
+
+            return foundhotel;
+        }
+
+
     }
 }
