@@ -8,6 +8,8 @@
 | 11  | Databases and ERDs | 16/7/2023  |
 | 12  | Intro to Entity Framework | 19/7/2023 |
 | 13  | Dependency Injection | 23/7/2023      |
+| 14  | Navigation Properites | 26/7/2023      |
+| 14  | DTOs | 31/7/2023      |
 
 ## Description
 
@@ -47,11 +49,15 @@ Explanation of the Tables:
    
 ## architecture 
 
-- :heavy_check_mark: 3 esstinal models (Hotels, Rooms, and Amenities).
-- :heavy_check_mark: 3 Interfaces for every model.
+- :heavy_check_mark: 3 esstinal models (Hotels, Rooms, and Amenities) and 2 other models to represent thr M-M relations in the ERD.
+- :heavy_check_mark: 5 Interfaces for every model.
 - :heavy_check_mark: service for each of the controllers that implement the appropriate interface.
 - :heavy_check_mark: CRUD operations for evry class.
 - :heavy_check_mark: I Update the Controller to use the appropriate method from the interface rather than the DBContext directly.
+
+## API Routes
+
+![Async Inn](./assets/Lab14routes.png)
 
 ## API Requests (CRUD operations)
 

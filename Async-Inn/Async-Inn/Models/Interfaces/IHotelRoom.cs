@@ -2,12 +2,10 @@
 {
     public interface IHotelRoom
     {
-        Task<HotelRoom> GetHotelRoom(int hotelId, int roomNumber);
-        Task<List<HotelRoom>> GetHotelRooms(int hotelId);
-        Task<HotelRoom> UpdateHotelRoom(HotelRoom hotelRoom);
+        Task<HotelRoom> AddHotelRoom(int hotelId, HotelRoom hotelRoom);
+        Task<HotelRoom> UpdateHotelRoom(int hotelId, int roomNumber, HotelRoom hotelRoom);
         Task DeleteHotelRoom(int hotelId, int roomNumber);
-        Task<HotelRoom> AddHotelRoom(HotelRoom hotelRoom);
-
-        Task RemoveRoomFromHotel(int roomId, int hotelId);
+        Task<List<HotelRoom>> GetAllHotelRooms(int hotelId);
+        Task<HotelRoom> GetHotelRoom(int hotelId, int roomNumber);
     }
 }
