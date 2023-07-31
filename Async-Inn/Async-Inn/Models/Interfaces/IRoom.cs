@@ -4,9 +4,9 @@
     {
         Task<Room> CreateRoom(Room room);
 
-        Task<List<Room>> GetRooms();
+        Task<List<Room>> GetAllRooms();
 
-        Task<Room> GetRoom(int id);
+        Task<Room> GetRoomById(int id);
 
         Task<Room> UpdateRoom(int id, Room room);
 

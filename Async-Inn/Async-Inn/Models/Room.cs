@@ -4,12 +4,20 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Layout { get; set; }
+        public Layout layout { get; set; }
 
 
         //Navigation Properties 
-        public List<HotelRoom> HotelRoom { get; set; }
         public List<RoomAmenity> RoomAmenities { get; set; }
+        public List<HotelRoom> HotelRooms { get; set; }
     }
+
+    public enum Layout
+    {
+        Studio,
+        OneBedroom,
+        TwoBedroom
+    }
+
 }
 

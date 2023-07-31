@@ -11,6 +11,6 @@
         public string Phone { get; set; }
 
         //Navigation Properties
-        public ICollection<HotelRoom> HotelRoom { get; set; }
+        public List<HotelRoom> HotelRoom { get; set; }
     }
 }

@@ -25,9 +25,9 @@ namespace Async_Inn
                 (opions => opions.UseSqlServer(connString));
 
 
-            builder.Services.AddTransient<IAmenity, AmenityServices>();
-            builder.Services.AddTransient<IRoom, RoomServices>();
-            builder.Services.AddTransient<IHotel, HotelServices>();
+            builder.Services.AddScoped<IAmenity, AmenityServices>();
+            builder.Services.AddScoped<IRoom, RoomServices>();
+            builder.Services.AddScoped<IHotel, HotelServices>();
 
             var app = builder.Build();
 

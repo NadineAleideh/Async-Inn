@@ -5,74 +5,76 @@ using Microsoft.EntityFrameworkCore;
 namespace Async_Inn.Models.Services
 {
     public class HotelServices : IHotel
-    {
-        private readonly AsyncInnDbContext _hotel;
 
-        public HotelServices(AsyncInnDbContext hotel)
+    {    // this will brings the DB to the service
+
+        private readonly AsyncInnDbContext _context;
+        public HotelServices(AsyncInnDbContext context)
         {
-            _hotel = hotel;
+            _context = context;
         }
+
         public async Task<Hotel> CreateHotel(Hotel hotel)
         {
-            _hotel.Hotels.Add(hotel);
+            _context.Hotels.Add(hotel);
 
-            await _hotel.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return hotel;
+        }
+        public async Task<Hotel> UpdateHotel(int id, Hotel hotel)
+        {
+            var hoteltoupdte = await GetHotelById(id);
+
+            if (hoteltoupdte != null)
+            {
+                hoteltoupdte.Name = hotel.Name;
+                hoteltoupdte.StreetAddress = hotel.StreetAddress;
+                hoteltoupdte.City = hotel.City;
+                hoteltoupdte.State = hotel.State;
+                hoteltoupdte.Country = hotel.Country;
+                hoteltoupdte.Phone = hotel.Phone;
+
+                await _context.SaveChangesAsync();
+            }
+            return hoteltoupdte;
         }
 
         public async Task DeleteHotel(int id)
         {
-            Hotel hotel = await GetHotel(id);
-
-            _hotel.Entry<Hotel>(hotel).State = EntityState.Deleted;
-
-            await _hotel.SaveChangesAsync();
+            var hotel = await GetHotelById(id);
+            if (hotel != null)
+            {
+                _context.Hotels.Remove(hotel);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public async Task<Hotel> GetHotel(int id)
+        public async Task<List<Hotel>> GetAllHotels()
         {
-            Hotel hotel = await _hotel.Hotels.FindAsync(id);
-
-            return hotel;
-        }
-
-        public async Task<List<Hotel>> GetHotels()
-        {
-            var hotels = await _hotel.Hotels.ToListAsync();
-
+            var hotels = await _context.Hotels.Include(h => h.HotelRoom).ToListAsync();
             return hotels;
         }
 
-        public async Task<Hotel> UpdateHotel(int id, Hotel hotel)
+        public async Task<Hotel> GetHotelById(int id)
         {
-            var oldhotel = await GetHotel(id);
-
-            if (oldhotel != null)
-            {
-                oldhotel.Name = hotel.Name;
-                oldhotel.StreetAddress = hotel.StreetAddress;
-                oldhotel.City = hotel.City;
-                oldhotel.State = hotel.State;
-                oldhotel.Country = hotel.Country;
-                oldhotel.Phone = hotel.Phone;
-
-                await _hotel.SaveChangesAsync();
-            }
-            return oldhotel;
+            var hotel = await _context.Hotels.Where(h => h.Id == id).Include(h => h.HotelRoom).FirstOrDefaultAsync();
+            return hotel;
         }
 
-
-        // stretch goal : Add the ability within your HotelController to “find a hotel by name”.
         public async Task<Hotel> GetHotelByName(string name)
         {
+            var hotels = await _context.Hotels.Include(h => h.HotelRoom).ToListAsync();
+            var foundhotelbyname = hotels.FirstOrDefault(h => h.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            return foundhotelbyname;
 
-            var hotels = await _hotel.Hotels.ToListAsync();
 
-            return hotels.FirstOrDefault(h => h.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
-    }
 
+
+
+
+    }
 
 }
 

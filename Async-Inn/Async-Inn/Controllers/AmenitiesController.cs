@@ -22,37 +22,15 @@ namespace Async_Inn.Controllers
             _context = context;
         }
 
-        // GET: api/Amenities
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Amenity>>> GetAmenities()
+        [HttpPost]
+        public async Task<ActionResult<Amenity>> PostAmenity(Amenity amenity)
         {
-            if (_context == null)
-            {
-                return NotFound();
-            }
-            return await _context.GetAmenities();
+
+            await _context.CreateAmenity(amenity);
+
+            return CreatedAtAction("GetAmenityById", new { id = amenity.Id }, amenity);
         }
 
-        // GET: api/Amenities/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Amenity>> GetAmenity(int id)
-        {
-            if (_context == null)
-            {
-                return NotFound();
-            }
-            var amenity = await _context.GetAmenity(id);
-
-            if (amenity == null)
-            {
-                return NotFound();
-            }
-
-            return amenity;
-        }
-
-        // PUT: api/Amenities/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAmenity(int id, Amenity amenity)
         {
@@ -63,42 +41,41 @@ namespace Async_Inn.Controllers
 
             await _context.UpdateAmenity(id, amenity);
 
-            return NoContent();
+            return Ok("Amenity Updated successfully!");
         }
 
-        // POST: api/Amenities
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Amenity>> PostAmenity(Amenity amenity)
-        {
-            if (_context == null)
-            {
-                return Problem("Entity set 'AsyncInnDbContext.Amenities'  is null.");
-            }
-            await _context.CreateAmenity(amenity);
 
-            return CreatedAtAction("GetAmenity", new { id = amenity.Id }, amenity);
-        }
-
-        // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAmenity(int id)
         {
-            if (_context == null)
-            {
-                return NotFound();
-            }
-            var amenity = await _context.GetAmenity(id);
+
+            await _context.DeleteAmenity(id);
+
+            return Ok("Amenity Deleted successfully!");
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Amenity>>> GetAllAmenities()
+        {
+            var amenities = await _context.GetAllAmenities();
+            return Ok(amenities);
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Amenity>> GetAmenityById(int id)
+        {
+
+            var amenity = await _context.GetAmenityById(id);
+
             if (amenity == null)
             {
                 return NotFound();
             }
 
-            _context.DeleteAmenity(id);
-
-            return NoContent();
+            return Ok(amenity);
         }
-
 
     }
 }
