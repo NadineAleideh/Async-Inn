@@ -62,7 +62,11 @@ namespace Async_Inn.Models.Services
 
         public async Task<List<HotelDTO>> GetAllHotels()
         {
-            var hotels = await _context.Hotels.Include(h => h.HotelRoom).ToListAsync();
+            var hotels = await _context.Hotels
+        .Include(h => h.HotelRoom)
+            .ThenInclude(hr => hr.Room)
+                .ThenInclude(r => r.RoomAmenities)
+                    .ThenInclude(ra => ra.Amenities).ToListAsync();
             var hotelDTOs = hotels.Select(hotel => new HotelDTO
             {
                 ID = hotel.Id,
@@ -77,7 +81,18 @@ namespace Async_Inn.Models.Services
                     RoomNumber = hr.RoomNumber,
                     Price = hr.Price,
                     PetFriendly = hr.PetFriendly,
-                    RoomID = hr.RoomId
+                    RoomID = hr.Room.Id,
+                    Room = new RoomDTO
+                    {
+                        ID = hr.Room.Id,
+                        Name = hr.Room.Name,
+                        Layout = hr.Room.layout.ToString(), // Convert the enum to string
+                        Amenities = hr.Room.RoomAmenities.Select(ra => new AmenityDTO
+                        {
+                            ID = ra.Amenities.Id,
+                            Name = ra.Amenities.Name
+                        }).ToList()
+                    }
                 }).ToList()
             }).ToList();
 
@@ -86,10 +101,16 @@ namespace Async_Inn.Models.Services
 
         public async Task<HotelDTO> GetHotelById(int id)
         {
-            var hotel = await _context.Hotels.Where(h => h.Id == id).Include(h => h.HotelRoom).FirstOrDefaultAsync();
+            var hotel = await _context.Hotels
+        .Include(h => h.HotelRoom)
+            .ThenInclude(hr => hr.Room)
+                .ThenInclude(r => r.RoomAmenities)
+                    .ThenInclude(ra => ra.Amenities)
+        .FirstOrDefaultAsync(h => h.Id == id);
+
             if (hotel == null)
             {
-                return null;
+                return null; // or throw an exception if needed
             }
 
             var hotelDTO = new HotelDTO
@@ -106,7 +127,18 @@ namespace Async_Inn.Models.Services
                     RoomNumber = hr.RoomNumber,
                     Price = hr.Price,
                     PetFriendly = hr.PetFriendly,
-                    RoomID = hr.RoomId
+                    RoomID = hr.Room.Id,
+                    Room = new RoomDTO
+                    {
+                        ID = hr.Room.Id,
+                        Name = hr.Room.Name,
+                        Layout = hr.Room.layout.ToString(), // Convert the enum to string
+                        Amenities = hr.Room.RoomAmenities.Select(ra => new AmenityDTO
+                        {
+                            ID = ra.Amenities.Id,
+                            Name = ra.Amenities.Name
+                        }).ToList()
+                    }
                 }).ToList()
             };
 
@@ -115,7 +147,11 @@ namespace Async_Inn.Models.Services
 
         public async Task<HotelDTO> GetHotelByName(string name)
         {
-            var hotels = await _context.Hotels.Include(h => h.HotelRoom).ToListAsync();
+            var hotels = await _context.Hotels
+        .Include(h => h.HotelRoom)
+            .ThenInclude(hr => hr.Room)
+                .ThenInclude(r => r.RoomAmenities)
+                    .ThenInclude(ra => ra.Amenities).ToListAsync();
             var foundhotelbyname = hotels.FirstOrDefault(h => h.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
             if (foundhotelbyname == null)
             {
@@ -136,7 +172,18 @@ namespace Async_Inn.Models.Services
                     RoomNumber = hr.RoomNumber,
                     Price = hr.Price,
                     PetFriendly = hr.PetFriendly,
-                    RoomID = hr.RoomId
+                    RoomID = hr.Room.Id,
+                    Room = new RoomDTO
+                    {
+                        ID = hr.Room.Id,
+                        Name = hr.Room.Name,
+                        Layout = hr.Room.layout.ToString(), // Convert the enum to string
+                        Amenities = hr.Room.RoomAmenities.Select(ra => new AmenityDTO
+                        {
+                            ID = ra.Amenities.Id,
+                            Name = ra.Amenities.Name
+                        }).ToList()
+                    }
                 }).ToList()
             };
 
