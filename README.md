@@ -71,10 +71,27 @@ Explanation of the Tables:
 
 ## API Requests to show the DTOs effect
 
+- https://localhost:7082/api/Hotels
+
 ![Async Inn](./assets/hotels.png)
+
+- https://localhost:7082/api/Hotels/1
+
 ![Async Inn](./assets/hotel.png)
+
+- https://localhost:7082/api/Hotels/1/Rooms
+
 ![Async Inn](./assets/hotelrooms.png)
+
+https://localhost:7082/api/Rooms
+
 ![Async Inn](./assets/Rooms.png)
+
+https://localhost:7082/api/Rooms/1
+
 ![Async Inn](./assets/room.png)
+
+- https://localhost:7082/api/amenities
+
 ![Async Inn](./assets/amenities.png)
 
