@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
+using Async_Inn.Models.DTOs;
 
 namespace Async_Inn.Controllers
 {
@@ -23,24 +24,20 @@ namespace Async_Inn.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Amenity>> PostAmenity(Amenity amenity)
+        public async Task<ActionResult<AmenityDTO>> PostAmenity(AmenityDTO amenityDTO)
         {
+            var createdAmenity = await _context.CreateAmenity(amenityDTO);
 
-            await _context.CreateAmenity(amenity);
-
-            return CreatedAtAction("GetAmenityById", new { id = amenity.Id }, amenity);
+            return CreatedAtAction("GetAmenityById", new { id = createdAmenity.ID }, createdAmenity);
         }
 
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAmenity(int id, Amenity amenity)
+        public async Task<ActionResult<AmenityDTO>> PutAmenity(int id, AmenityDTO amenityDTO)
         {
-            if (id != amenity.Id)
-            {
-                return BadRequest();
-            }
+            var updatedAmenity = await _context.UpdateAmenity(id, amenityDTO);
 
-            await _context.UpdateAmenity(id, amenity);
-
+            //return updatedAmenity;
             return Ok("Amenity Updated successfully!");
         }
 
@@ -48,33 +45,31 @@ namespace Async_Inn.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAmenity(int id)
         {
-
             await _context.DeleteAmenity(id);
-
             return Ok("Amenity Deleted successfully!");
         }
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Amenity>>> GetAllAmenities()
+        public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAllAmenities()
         {
-            var amenities = await _context.GetAllAmenities();
-            return Ok(amenities);
+            var amenityDTOs = await _context.GetAllAmenities();
+            return Ok(amenityDTOs);
         }
 
 
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<Amenity>> GetAmenityById(int id)
+        public async Task<ActionResult<AmenityDTO>> GetAmenityById(int id)
         {
+            var amenityDTO = await _context.GetAmenityById(id);
 
-            var amenity = await _context.GetAmenityById(id);
-
-            if (amenity == null)
+            if (amenityDTO == null)
             {
                 return NotFound();
             }
 
-            return Ok(amenity);
+            return Ok(amenityDTO);
         }
 
     }

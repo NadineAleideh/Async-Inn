@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
+using Async_Inn.Models.DTOs;
 
 namespace Async_Inn.Controllers
 {
@@ -24,31 +25,24 @@ namespace Async_Inn.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<Room>> PostRoom(Room room)
+        public async Task<ActionResult<RoomDTO>> PostRoom(RoomDTO roomDTO)
         {
-
-            var createdRoom = await _context.CreateRoom(room);
-
-            //return CreatedAtAction("GetRoom", new { id = createdRoom.Id }, createdRoom);
-
-            //return Ok(createdRoom);
-            return Ok("Room Added Successfully!");
+            var createdRoom = await _context.CreateRoom(roomDTO);
+            return Ok(createdRoom);
         }
 
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoom(int id, Room room)
+        public async Task<IActionResult> PutRoom(int id, RoomDTO roomDTO)
         {
-            if (id != room.Id)
+            if (id != roomDTO.ID)
             {
                 return BadRequest();
             }
 
-            var updateRoom = await _context.UpdateRoom(id, room);
-
-            //return Ok(updateRoom);
-            return Ok("Room updated Successfully!");
+            var updateRoom = await _context.UpdateRoom(id, roomDTO);
+            return Ok(updateRoom);
         }
 
 
@@ -56,25 +50,23 @@ namespace Async_Inn.Controllers
         public async Task<IActionResult> DeleteRoom(int id)
         {
             await _context.DeleteRoom(id);
-
-            // return NoContent();
             return Ok("Room deleted Successfully!");
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
+        public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms()
         {
-            var room = await _context.GetAllRooms();
-            if (room == null || room.Count == 0)
+            var rooms = await _context.GetAllRooms();
+            if (rooms == null || rooms.Count == 0)
             {
                 return NotFound();
             }
-            return Ok(room.ToList());
+            return Ok(rooms);
         }
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Room>> GetRoomById(int id)
+        public async Task<ActionResult<RoomDTO>> GetRoomById(int id)
         {
             var room = await _context.GetRoomById(id);
 
@@ -82,7 +74,6 @@ namespace Async_Inn.Controllers
             {
                 return NotFound();
             }
-
 
             return Ok(room);
         }
