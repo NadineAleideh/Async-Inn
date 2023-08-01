@@ -69,3 +69,12 @@ Explanation of the Tables:
 ![Async Inn](./assets/PostHotel.PNG)
 ![Async Inn](./assets/DeleteHotel.PNG)
 
+## API Requests to show the DTOs effect
+
+![Async Inn](./assets/hotels.png)
+![Async Inn](./assets/hotel.png)
+![Async Inn](./assets/hotelrooms.png)
+![Async Inn](./assets/rooms.png)
+![Async Inn](./assets/room.png)
+![Async Inn](./assets/amenities.png)
+

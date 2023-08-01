@@ -28,6 +28,7 @@ namespace Async_Inn
             builder.Services.AddScoped<IAmenity, AmenityServices>();
             builder.Services.AddScoped<IRoom, RoomServices>();
             builder.Services.AddScoped<IHotel, HotelServices>();
+            builder.Services.AddScoped<IHotelRoom, HotelRoomServices>();
 
             var app = builder.Build();
 
