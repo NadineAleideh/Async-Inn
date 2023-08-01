@@ -74,7 +74,7 @@ Explanation of the Tables:
 ![Async Inn](./assets/hotels.png)
 ![Async Inn](./assets/hotel.png)
 ![Async Inn](./assets/hotelrooms.png)
-![Async Inn](./assets/rooms.png)
+![Async Inn](./assets/Rooms.png)
 ![Async Inn](./assets/room.png)
 ![Async Inn](./assets/amenities.png)
 
