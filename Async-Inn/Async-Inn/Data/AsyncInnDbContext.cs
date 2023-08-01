@@ -1,4 +1,6 @@
 ﻿using Async_Inn.Models;
+using Async_Inn.Models.DTOs;
+using Async_Inn.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Async_Inn.Data
@@ -29,9 +31,60 @@ namespace Async_Inn.Data
                 new Amenity() { Id = 1, Name = "Coffee Maker" },
                 new Amenity() { Id = 2, Name = "AC" },
                 new Amenity() { Id = 3, Name = "Sea View" });
+
+
+            modelBuilder.Entity<HotelRoom>().HasData(
+                 new HotelRoom
+                 {
+                     HotelId = 1,
+                     RoomNumber = 101,
+                     RoomId = 1,
+                     Price = 100.00,
+                     PetFriendly = true
+                 },
+                 new HotelRoom
+                 {
+                     HotelId = 1,
+                     RoomNumber = 102,
+                     RoomId = 2,
+                     Price = 120.00,
+                     PetFriendly = false
+                 });
+
+
+
+            // Configure the relationship between Room and RoomAmenity entities
+            modelBuilder.Entity<RoomAmenity>()
+            .HasOne(ra => ra.Room)
+            .WithMany(r => r.RoomAmenities)
+            .HasForeignKey(ra => ra.RoomId)
+            .OnDelete(DeleteBehavior.Cascade); // This line configures cascading delete
+
+
+            // Configure the relationship between RoomAmenity and Amenity entities
+            modelBuilder.Entity<RoomAmenity>()
+                .HasOne(ra => ra.Amenities)
+                .WithMany(a => a.RoomAmenities)
+                .HasForeignKey(ra => ra.AmenityId)
+                .OnDelete(DeleteBehavior.Cascade); // <-- This enables cascading delete
+
+            // Configuring cascading delete for HotelRoom entity
+            modelBuilder.Entity<HotelRoom>()
+                .HasOne(hr => hr.Hotel)
+                .WithMany(h => h.HotelRoom)
+                .HasForeignKey(hr => hr.HotelId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // configure cascading delete for Room
+            modelBuilder.Entity<Room>()
+                .HasMany(r => r.HotelRooms)
+                .WithOne(hr => hr.Room)
+                .HasForeignKey(hr => hr.RoomId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
-        public DbSet<Hotel> Hotels { get; set; } // correspond to db tables
+        // correspond to db tables
+        public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
 

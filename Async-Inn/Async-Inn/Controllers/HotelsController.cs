@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
+using Async_Inn.Models.DTOs;
 
 namespace Async_Inn.Controllers
 {
@@ -15,7 +16,6 @@ namespace Async_Inn.Controllers
     [ApiController]
     public class HotelsController : ControllerBase
     {
-        // DI
         private readonly IHotel _context;
         public HotelsController(IHotel context)
         {
@@ -23,54 +23,59 @@ namespace Async_Inn.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+        public async Task<ActionResult<HotelDTO>> PostHotel(HotelDTO hotelDTO)
         {
-            await _context.CreateHotel(hotel);
-            // return CreatedAtAction("GetHotelById", new { id = hotel.Id }, hotel);
-            return Ok("Hotel Added Successfuly!");
+            var createdHotel = await _context.CreateHotel(hotelDTO);
+            return Ok(createdHotel);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotel(int id, Hotel hotel)
+        public async Task<IActionResult> PutHotel(int id, HotelDTO hotelDTO)
         {
-            if (id != hotel.Id)
+            if (id != hotelDTO.ID)
             {
                 return BadRequest();
             }
 
-            var UpdatedHotel = await _context.UpdateHotel(id, hotel);
-
-            return Ok(UpdatedHotel);
+            var updatedHotel = await _context.UpdateHotel(id, hotelDTO);
+            return Ok(updatedHotel);
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> DeleteHotel(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteHotel(int id)
         {
             await _context.DeleteHotel(id);
-            return Ok("Hotel Deleted Successfuly!");
+            return Ok("Hotel Deleted Successfully!");
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Hotel>>> GetAllHotels()
+        public async Task<ActionResult<List<HotelDTO>>> GetAllHotels()
         {
             var hotels = await _context.GetAllHotels();
             return Ok(hotels);
-
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotelByTd(int id)
+        public async Task<ActionResult<HotelDTO>> GetHotelById(int id)
         {
             var hotel = await _context.GetHotelById(id);
+            if (hotel == null)
+            {
+                return NotFound();
+            }
+
             return Ok(hotel);
         }
 
         [HttpGet("byName/{name}")]
-
-
-        public async Task<ActionResult<Hotel>> GetHotelByName(string name)
+        public async Task<ActionResult<HotelDTO>> GetHotelByName(string name)
         {
             var hotel = await _context.GetHotelByName(name);
+            if (hotel == null)
+            {
+                return NotFound();
+            }
+
             return Ok(hotel);
         }
     }

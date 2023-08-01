@@ -1,4 +1,5 @@
 ﻿using Async_Inn.Data;
+using Async_Inn.Models.DTOs;
 using Async_Inn.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,47 +14,82 @@ namespace Async_Inn.Models.Services
         {
             _context = context;
         }
-        public async Task<Amenity> CreateAmenity(Amenity amenity)
+        public async Task<AmenityDTO> CreateAmenity(AmenityDTO amenityDTO)
         {
-            await _context.Amenities.AddAsync(amenity);
-            var amentiy = await GetAmenityById(amenity.Id);
+            var amenityEntity = new Amenity
+            {
+                Name = amenityDTO.Name
+            };
+
+            await _context.Amenities.AddAsync(amenityEntity);
             await _context.SaveChangesAsync();
-            return amentiy;
+
+            amenityDTO.ID = amenityEntity.Id;
+            return amenityDTO;
         }
 
-        public async Task<Amenity> UpdateAmenity(int id, Amenity amenity)
-        {
-            var amenitytoupdate = await GetAmenityById(id);
 
-            if (amenitytoupdate != null)
+        public async Task<AmenityDTO> UpdateAmenity(int id, AmenityDTO amenityDTO)
+        {
+            var amenityToUpdate = await _context.Amenities.FindAsync(id);
+
+            if (amenityToUpdate != null)
             {
-                amenitytoupdate.Name = amenity.Name;
+                amenityToUpdate.Name = amenityDTO.Name;
 
                 await _context.SaveChangesAsync();
             }
-
-
-            return amenitytoupdate;
+            return amenityDTO;
         }
+
 
         public async Task DeleteAmenity(int id)
         {
-            var amenity = await GetAmenityById(id);
-            _context.Amenities.Remove(amenity);
-            await _context.SaveChangesAsync();
-        }
+            var amenity = await _context.Amenities.FindAsync(id);
+            if (amenity != null)
+            {
+                // Remove all associated RoomAmenities
+                foreach (var roomAmenity in amenity.RoomAmenities.ToList())
+                {
+                    _context.RoomAmenities.Remove(roomAmenity);
+                }
 
-        public async Task<List<Amenity>> GetAllAmenities()
+                // Remove the Amenity itself
+                _context.Amenities.Remove(amenity);
+
+                await _context.SaveChangesAsync();
+            }
+        }
+        public async Task<List<AmenityDTO>> GetAllAmenities()
         {
-            var amenities = await _context.Amenities.Include(a => a.RoomAmenities).ToListAsync();
-            return amenities;
+            var amenities = await _context.Amenities
+                .Include(a => a.RoomAmenities)
+                .ToListAsync();
+
+            var amenityDTOs = amenities.Select(amenity => new AmenityDTO
+            {
+                ID = amenity.Id,
+                Name = amenity.Name
+            }).ToList();
+
+            return amenityDTOs;
         }
 
-        public async Task<Amenity> GetAmenityById(int id)
+        public async Task<AmenityDTO> GetAmenityById(int id)
         {
             var amenity = await _context.Amenities.FindAsync(id);
 
-            return amenity;
+            if (amenity == null)
+            {
+                return null;
+            }
+
+            var amenityDTO = new AmenityDTO
+            {
+                ID = amenity.Id,
+                Name = amenity.Name
+            };
+            return amenityDTO;
         }
     }
 }

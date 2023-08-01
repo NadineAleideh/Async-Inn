@@ -1,4 +1,5 @@
 ﻿using Async_Inn.Data;
+using Async_Inn.Models.DTOs;
 using Async_Inn.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,94 +13,56 @@ namespace Async_Inn.Models.Services
         {
             _context = context;
         }
-        public async Task<Room> CreateRoom(Room room)
-        {
-            _context.Rooms.Add(room);
 
+        public async Task<RoomDTO> CreateRoom(RoomDTO roomDTO)
+        {
+            var room = new Room
+            {
+                Name = roomDTO.Name,
+                layout = Enum.Parse<Layout>(roomDTO.Layout)
+            };
+
+            _context.Rooms.Add(room);
             await _context.SaveChangesAsync();
 
-            return room;
+            return MapToDTO(room);
         }
 
-        public async Task<Room> UpdateRoom(int id, Room room)
+        public async Task<RoomDTO> UpdateRoom(int id, RoomDTO roomDTO)
         {
-            var roomtoupdate = await _context.Rooms.FindAsync(id);
+            var roomToUpdate = await _context.Rooms.FindAsync(id);
 
-            if (roomtoupdate != null)
+            if (roomToUpdate != null)
             {
-                roomtoupdate.Name = room.Name;
-                roomtoupdate.layout = room.layout;
+                roomToUpdate.Name = roomDTO.Name;
+                roomToUpdate.layout = Enum.Parse<Layout>(roomDTO.Layout);
 
                 await _context.SaveChangesAsync();
             }
 
-            return roomtoupdate;
+            return MapToDTO(roomToUpdate);
         }
 
         public async Task DeleteRoom(int id)
         {
-            Room room = await GetRoomById(id);
-
-            _context.Entry<Room>(room).State = EntityState.Deleted;
-
+            var room = await _context.Rooms.FindAsync(id);
+            _context.Rooms.Remove(room);
             await _context.SaveChangesAsync();
         }
 
-
-        public async Task<List<Room>> GetAllRooms()
+        public async Task<List<RoomDTO>> GetAllRooms()
         {
             var rooms = await _context.Rooms
                 .Include(r => r.RoomAmenities)
-                    .ThenInclude(ra => ra.Amenities)
+                .ThenInclude(ra => ra.Amenities)
                 .Include(hotelRooms => hotelRooms.HotelRooms)
                 .ThenInclude(hotel => hotel.Hotel)
                 .ToListAsync();
 
-
-            var result = rooms.Select(r => new Room
-            {
-                Id = r.Id,
-                Name = r.Name,
-                layout = r.layout,
-                RoomAmenities = r.RoomAmenities.Select(ra => new RoomAmenity
-                {
-                    RoomId = ra.RoomId,
-                    AmenityId = ra.AmenityId,
-                    Amenities = new Amenity
-                    {
-                        Id = ra.Amenities.Id,
-                        Name = ra.Amenities.Name,
-                    },
-                    Room = null
-
-                }).ToList(),
-                HotelRooms = r.HotelRooms.Select(ra => new HotelRoom
-                {
-                    HotelId = ra.HotelId,
-                    RoomId = ra.RoomId,
-                    RoomNumber = ra.RoomNumber,
-                    Price = ra.Price,
-                    PetFriendly = ra.PetFriendly,
-                    Hotel = new Hotel
-                    {
-                        Id = ra.Hotel.Id,
-                        Name = ra.Hotel.Name,
-                        StreetAddress = ra.Hotel.StreetAddress,
-                        City = ra.Hotel.City,
-                        State = ra.Hotel.State,
-                        Country = ra.Hotel.Country,
-                        Phone = ra.Hotel.Phone
-                    }
-
-                }).ToList()
-
-            }).ToList();
-
-            return result;
-
+            return rooms.Select(MapToDTO).ToList();
         }
 
-        public async Task<Room> GetRoomById(int id)
+        public async Task<RoomDTO> GetRoomById(int id)
         {
             var room = await _context.Rooms
                 .Include(amenities => amenities.RoomAmenities)
@@ -108,12 +71,8 @@ namespace Async_Inn.Models.Services
                 .ThenInclude(hotel => hotel.Hotel)
                 .FirstOrDefaultAsync(rId => rId.Id == id);
 
-            return room;
-
+            return MapToDTO(room);
         }
-
-
-        //logic to add and remove amenities from rooms
 
         public async Task AddAmenityToRoom(int roomId, int amenityId)
         {
@@ -126,7 +85,6 @@ namespace Async_Inn.Models.Services
             _context.Entry(roomAmenity).State = EntityState.Added;
 
             await _context.SaveChangesAsync();
-
         }
 
         public async Task RemoveAmenityFromRoom(int roomId, int amenityId)
@@ -137,5 +95,21 @@ namespace Async_Inn.Models.Services
 
             await _context.SaveChangesAsync();
         }
+
+        private RoomDTO MapToDTO(Room room)
+        {
+            return new RoomDTO
+            {
+                ID = room.Id,
+                Name = room.Name,
+                Layout = room.layout.ToString(),
+                Amenities = room.RoomAmenities.Select(ra => new AmenityDTO
+                {
+                    ID = ra.Amenities.Id,
+                    Name = ra.Amenities.Name
+                }).ToList()
+            };
+        }
     }
+
 }

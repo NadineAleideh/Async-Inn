@@ -1,11 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\assets",
     "\\Async-Inn",
     "\\Async-Inn\\Async-Inn",
-    "\\Async-Inn\\Async-Inn\\Models",
-    "\\Async-Inn\\Async-Inn\\Models\\Services"
+    "\\Async-Inn\\Async-Inn\\Models"
   ],
-  "SelectedNode": "\\Async-Inn\\Async-Inn\\Models\\Services\\HotelServices.cs",
+  "SelectedNode": "\\Async-Inn\\Async-Inn.sln",
   "PreviewInSolutionExplorer": false
 }

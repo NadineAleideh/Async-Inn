@@ -9,7 +9,7 @@
 | 12  | Intro to Entity Framework | 19/7/2023 |
 | 13  | Dependency Injection | 23/7/2023      |
 | 14  | Navigation Properites | 26/7/2023      |
-| 14  | DTOs | 31/7/2023      |
+| 16  | DTOs | 31/7/2023      |
 
 ## Description
 
@@ -54,6 +54,7 @@ Explanation of the Tables:
 - :heavy_check_mark: service for each of the controllers that implement the appropriate interface.
 - :heavy_check_mark: CRUD operations for evry class.
 - :heavy_check_mark: I Update the Controller to use the appropriate method from the interface rather than the DBContext directly.
+- :heavy_check_mark: I Update the code to use the DTOs principle.
 
 ## API Routes
 

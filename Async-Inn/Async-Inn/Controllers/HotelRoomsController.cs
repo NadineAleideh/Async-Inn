@@ -9,6 +9,7 @@ using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
 using Async_Inn.Models.Services;
+using Async_Inn.Models.DTOs;
 
 namespace Async_Inn.Controllers
 {
@@ -23,62 +24,39 @@ namespace Async_Inn.Controllers
             _context = context;
         }
 
-
-        // POST to add a room to a hotel: /api/Hotels/{hotelId}/Rooms
         [HttpPost]
-        public async Task<ActionResult<HotelRoom>> AddHotelRoom(int hotelId, HotelRoom hotelRoom)
+        public async Task<ActionResult<HotelRoomDTO>> AddHotelRoom(int hotelId, HotelRoomDTO hotelRoomDTO)
         {
-            hotelRoom.HotelId = hotelId;
-            var addedHotelRoom = await _context.AddHotelRoom(hotelId, hotelRoom);
-            // return CreatedAtAction(nameof(GetHotelRoom), new { hotelId, roomId = addedHotelRoom.RoomId }, addedHotelRoom);
-            return Ok("added successfully!");
+            hotelRoomDTO.HotelID = hotelId;
+            var addedHotelRoom = await _context.AddHotelRoom(hotelId, hotelRoomDTO);
+            return Ok(addedHotelRoom);
         }
 
-        // PUT update the details of a specific room: /api/Hotels/{hotelId}/Rooms/{roomNumber}
         [HttpPut("{roomNumber}")]
-
-        public async Task<IActionResult> PutHotelRoom([FromRoute] int hotelId, [FromRoute] int roomNumber, [FromBody] HotelRoom hotelRoom)
+        public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber, HotelRoomDTO hotelRoomDTO)
         {
-            var updateHotelRoom = await _context.UpdateHotelRoom(hotelId, roomNumber, hotelRoom);
-
+            var updateHotelRoom = await _context.UpdateHotelRoom(hotelId, roomNumber, hotelRoomDTO);
             return Ok(updateHotelRoom);
         }
 
-
-        // DELETE a specific room from a hotel: /api/Hotels/{hotelId}/Rooms/{roomNumber}
         [HttpDelete("{roomNumber}")]
-        public async Task<IActionResult> DeleteRoomFromHotel(int hotelId, int roomNmber)
+        public async Task<IActionResult> DeleteRoomFromHotel(int hotelId, int roomNumber)
         {
-            if (_context == null)
-            {
-                return NotFound();
-            }
-            await _context.DeleteHotelRoom(hotelId, roomNmber);
-
-
-            return Ok("deleted successfully!");
-
+            await _context.DeleteHotelRoom(hotelId, roomNumber);
+            return Ok("Hotel room deleted successfully!");
         }
 
-        // GET all the rooms for a hotel: /api/Hotels/{hotelId}/Rooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId)
+        public async Task<ActionResult<List<HotelRoomDTO>>> GetHotelRooms(int hotelId)
         {
-            if (_context == null)
-            {
-                return NotFound();
-            }
-
             var hotelRooms = await _context.GetAllHotelRooms(hotelId);
-
             return Ok(hotelRooms);
         }
 
-        // GET all room details for a specific room: /api/Hotels/{hotelId}/Rooms/{roomNumber}
         [HttpGet("{roomNumber}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelId, int roomNumber)
+        public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int hotelId, int roomNumber)
         {
-            var hotelRoom = await _context.GetHotelRoom(roomNumber, hotelId);
+            var hotelRoom = await _context.GetHotelRoom(hotelId, roomNumber);
             if (hotelRoom == null)
             {
                 return NotFound();
@@ -86,10 +64,6 @@ namespace Async_Inn.Controllers
 
             return Ok(hotelRoom);
         }
-
-
-
-
-
     }
+
 }
