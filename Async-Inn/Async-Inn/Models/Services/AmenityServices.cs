@@ -14,6 +14,12 @@ namespace Async_Inn.Models.Services
         {
             _context = context;
         }
+
+        /// <summary>
+        /// to create a new amenity 
+        /// </summary>
+        /// <param name="amenityDTO"></param>
+        /// <returns>created amenity</returns>
         public async Task<AmenityDTO> CreateAmenity(AmenityDTO amenityDTO)
         {
             var amenityEntity = new Amenity
@@ -28,6 +34,12 @@ namespace Async_Inn.Models.Services
             return amenityDTO;
         }
 
+        /// <summary>
+        /// to update a spesific amenity by passing it's id and the updates 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="amenityDTO"></param>
+        /// <returns>the updated amenity</returns>
 
         public async Task<AmenityDTO> UpdateAmenity(int id, AmenityDTO amenityDTO)
         {
@@ -42,7 +54,11 @@ namespace Async_Inn.Models.Services
             return amenityDTO;
         }
 
-
+        /// <summary>
+        /// to delete a spesific amenity by it's id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>nothing</returns>
         public async Task DeleteAmenity(int id)
         {
             var amenity = await _context.Amenities.FindAsync(id);
@@ -60,6 +76,11 @@ namespace Async_Inn.Models.Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        /// <summary>
+        /// To get all amenities 
+        /// </summary>
+        /// <returns>List of all amenities</returns>
         public async Task<List<AmenityDTO>> GetAllAmenities()
         {
             var amenities = await _context.Amenities
@@ -75,6 +96,11 @@ namespace Async_Inn.Models.Services
             return amenityDTOs;
         }
 
+        /// <summary>
+        /// To get amenity by id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>the amenity which has the same id passed</returns>
         public async Task<AmenityDTO> GetAmenityById(int id)
         {
             var amenity = await _context.Amenities.FindAsync(id);
