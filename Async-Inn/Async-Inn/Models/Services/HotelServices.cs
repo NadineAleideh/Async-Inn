@@ -14,6 +14,11 @@ namespace Async_Inn.Models.Services
             _context = context;
         }
 
+        /// <summary>
+        /// to create a new hotel
+        /// </summary>
+        /// <param name="hotelDTO"></param>
+        /// <returns>the created hotel</returns>
         public async Task<HotelDTO> CreateHotel(HotelDTO hotelDTO)
         {
             var hotel = new Hotel
@@ -32,6 +37,13 @@ namespace Async_Inn.Models.Services
             return hotelDTO;
         }
 
+
+        /// <summary>
+        /// to update a specific hotel by passing it's id and the updates
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="hotelDTO"></param>
+        /// <returns>the updated hotel</returns>
         public async Task<HotelDTO> UpdateHotel(int id, HotelDTO hotelDTO)
         {
             var hotel = await GetHotelById(id);
@@ -50,6 +62,12 @@ namespace Async_Inn.Models.Services
             return hotelDTO;
         }
 
+
+        /// <summary>
+        /// to delete a specific hotel
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>nothing</returns>
         public async Task DeleteHotel(int id)
         {
             var hotel = await _context.Hotels.FindAsync(id);
@@ -60,6 +78,10 @@ namespace Async_Inn.Models.Services
             }
         }
 
+        /// <summary>
+        /// to get all hotels
+        /// </summary>
+        /// <returns>list of hotels</returns>
         public async Task<List<HotelDTO>> GetAllHotels()
         {
             var hotels = await _context.Hotels
@@ -99,6 +121,12 @@ namespace Async_Inn.Models.Services
             return hotelDTOs;
         }
 
+
+        /// <summary>
+        /// to get a specific hotel by it's id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>the hotel itself</returns>
         public async Task<HotelDTO> GetHotelById(int id)
         {
             var hotel = await _context.Hotels
@@ -110,7 +138,7 @@ namespace Async_Inn.Models.Services
 
             if (hotel == null)
             {
-                return null; // or throw an exception if needed
+                return null;
             }
 
             var hotelDTO = new HotelDTO
@@ -145,6 +173,12 @@ namespace Async_Inn.Models.Services
             return hotelDTO;
         }
 
+
+        /// <summary>
+        /// to get a specific hotel by it's name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>the hotel itself</returns>
         public async Task<HotelDTO> GetHotelByName(string name)
         {
             var hotels = await _context.Hotels

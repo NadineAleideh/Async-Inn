@@ -249,3 +249,8 @@ E:\DotNet\Async-Inn\Async-Inn\Async-Inn\obj\Debug\net7.0\ref\Async-Inn.dll
 E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
 E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Microsoft.OpenApi.dll
+E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\DotNet\Async-Inn\Async-Inn\Async-Inn\obj\Debug\net7.0\Async-Inn.MvcApplicationPartsAssemblyInfo.cs

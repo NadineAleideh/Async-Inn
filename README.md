@@ -10,6 +10,7 @@
 | 13  | Dependency Injection | 23/7/2023      |
 | 14  | Navigation Properites | 26/7/2023      |
 | 16  | DTOs | 31/7/2023      |
+| 17  | Testing and Swagger and Deployment | 5/8/2023      |
 
 ## Description
 
