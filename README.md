@@ -11,6 +11,7 @@
 | 14  | Navigation Properites | 26/7/2023      |
 | 16  | DTOs | 31/7/2023      |
 | 17  | Testing and Swagger and Deployment | 5/8/2023      |
+| 18  | Identity | 8/8/2023      |
 
 ## Description
 
@@ -47,7 +48,26 @@ Explanation of the Tables:
    - Acts as a pure join table to establish a many-to-many relationship between rooms and amenities.
    - Attributes: room_id (PK, FK), amenity_id (PK, FK)
 
-   
+## Schema
+
+![Async Inn Schema](./assets/s1.PNG)
+![Async Inn Schema](./assets/s2.PNG)
+![Async Inn Schema](./assets/s3.PNG)
+
+## Identity
+
+ASP.NET Core Identity was created to help with the security and management of users. It provides this abstraction layer between the application and the users/role data. We can use the API in it’s entirety, or just bits and pieces as we need (such as the salting/hashing by itself) or email services. There is a lot of flexibility within ASP.NET Core Identity. We have the ability to take or leave whatever we want. Identity combines well with EFCore and SQL Server.
+
+### Register a user
+
+![Async Inn register](./assets/register1.PNG)
+![Async Inn register](./assets/register2.PNG)
+
+### Login user
+
+![Async Inn login](./assets/login1.PNG)
+![Async Inn login](./assets/login2.PNG)
+
 ## architecture 
 
 - :heavy_check_mark: 3 esstinal models (Hotels, Rooms, and Amenities) and 2 other models to represent thr M-M relations in the ERD.

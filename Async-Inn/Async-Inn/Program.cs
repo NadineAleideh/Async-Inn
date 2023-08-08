@@ -2,6 +2,7 @@ using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
 using Async_Inn.Models.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 // the Tools package provides us with essential commandlines it's allow us like to write a queries 
@@ -25,7 +26,14 @@ namespace Async_Inn
                 .AddDbContext<AsyncInnDbContext>
                 (opions => opions.UseSqlServer(connString));
 
+            // to register, setup, configures the identity service to our app
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                //here we can set various options to costumize the identity service in our app
+                options.User.RequireUniqueEmail = true; // this force that each user must have a uniqe address
+            }).AddEntityFrameworkStores<AsyncInnDbContext>();
 
+            builder.Services.AddScoped<IUser, IdentityUserServices>();
             builder.Services.AddScoped<IAmenity, AmenityServices>();
             builder.Services.AddScoped<IRoom, RoomServices>();
             builder.Services.AddScoped<IHotel, HotelServices>();
