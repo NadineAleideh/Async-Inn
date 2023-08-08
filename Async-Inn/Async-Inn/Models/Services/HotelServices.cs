@@ -27,6 +27,7 @@ namespace Async_Inn.Models.Services
                 StreetAddress = hotelDTO.StreetAddress,
                 City = hotelDTO.City,
                 State = hotelDTO.State,
+                Country = "",
                 Phone = hotelDTO.Phone
             };
 
@@ -46,7 +47,7 @@ namespace Async_Inn.Models.Services
         /// <returns>the updated hotel</returns>
         public async Task<HotelDTO> UpdateHotel(int id, HotelDTO hotelDTO)
         {
-            var hotel = await GetHotelById(id);
+            var hotel = await _context.Hotels.FindAsync(id);
 
             if (hotel != null)
             {

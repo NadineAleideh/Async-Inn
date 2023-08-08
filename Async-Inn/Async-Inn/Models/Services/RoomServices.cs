@@ -8,11 +8,10 @@ namespace Async_Inn.Models.Services
     public class RoomServices : IRoom
     {
         private readonly AsyncInnDbContext _context;
-        private readonly IAmenity _amenity;
-        public RoomServices(AsyncInnDbContext context, IAmenity _am)
+        public RoomServices(AsyncInnDbContext context)
         {
             _context = context;
-            _amenity = _am;
+
         }
 
 

@@ -17,7 +17,7 @@ namespace TestAsyncInn
         private readonly SqliteConnection _connection;
 
         protected readonly AsyncInnDbContext _db;
-        protected readonly IAmenity _am;
+
 
         public Mock()
         {
@@ -33,34 +33,31 @@ namespace TestAsyncInn
         }
 
 
-        protected async Task<Room> CreateAndSaveTestRoom()
+        protected async Task<Hotel> CreateAndSaveTestHotel()
         {
-            var room = new Room() { Name = "Test1", layout = (Layout)1 };
-            _db.Rooms.Add(room);
+            var hotel = new Hotel
+            {
+                Name = "testhotel",
+                StreetAddress = "testhotel",
+                City = "testhotel",
+                State = "testhotel",
+                Country = "testcountry",
+                Phone = "testhotel"
+            };
+
+            _db.Hotels.Add(hotel);
             await _db.SaveChangesAsync();
 
-            Assert.NotEqual(0, room.Id);
+            Assert.NotEqual(0, hotel.Id);
 
-            return room;
+            return hotel;
 
-        }
-
-        protected async Task<Room> DeleteAndSaveRoomTest()
-        {
-            var room = new Room() { Id = 1, Name = "Test1", layout = (Layout)1 };
-            _db.Rooms.Remove(room);
-            await _db.SaveChangesAsync();
-
-            var deletedRoom = await _db.Rooms.FindAsync(room.Id);
-            Assert.Null(deletedRoom);
-
-            return room;
         }
 
 
         protected async Task<Amenity> CreateAndSaveTestAmenity()
         {
-            var amenity = new Amenity() { Name = "Test2" };
+            var amenity = new Amenity() { Name = "amenityTest1" };
             _db.Amenities.Add(amenity);
             await _db.SaveChangesAsync();
 
@@ -68,19 +65,6 @@ namespace TestAsyncInn
 
             return amenity;
 
-        }
-
-
-        protected async Task<Amenity> DeleteAndSaveAmenityTest()
-        {
-            var amenity = new Amenity() { Id = 1, Name = "Test1" };
-            _db.Amenities.Remove(amenity);
-            await _db.SaveChangesAsync();
-
-            var deletedAmenity = await _db.Amenities.FindAsync(amenity.Id);
-            Assert.Null(deletedAmenity);
-
-            return amenity;
         }
 
 
