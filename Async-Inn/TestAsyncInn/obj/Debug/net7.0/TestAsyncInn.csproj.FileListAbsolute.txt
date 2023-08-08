@@ -356,3 +356,9 @@ E:\DotNet\Async-Inn\Async-Inn\TestAsyncInn\bin\Debug\net7.0\Microsoft.OpenApi.dl
 E:\DotNet\Async-Inn\Async-Inn\TestAsyncInn\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
 E:\DotNet\Async-Inn\Async-Inn\TestAsyncInn\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 E:\DotNet\Async-Inn\Async-Inn\TestAsyncInn\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\DotNet\Async-Inn\Async-Inn\TestAsyncInn\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+E:\DotNet\Async-Inn\Async-Inn\TestAsyncInn\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+E:\DotNet\Async-Inn\Async-Inn\TestAsyncInn\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+E:\DotNet\Async-Inn\Async-Inn\TestAsyncInn\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
+E:\DotNet\Async-Inn\Async-Inn\TestAsyncInn\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
+E:\DotNet\Async-Inn\Async-Inn\TestAsyncInn\bin\Debug\net7.0\Microsoft.Extensions.Options.dll

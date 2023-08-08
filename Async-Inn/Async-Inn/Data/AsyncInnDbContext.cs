@@ -1,12 +1,13 @@
 ﻿using Async_Inn.Models;
 using Async_Inn.Models.DTOs;
 using Async_Inn.Models.Interfaces;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Async_Inn.Data
 {
-    public class AsyncInnDbContext : DbContext // it's a bradige between our app and the DB , allowing us to interacte with the DB. entry point for interacting with the db to perform operations 
-    {
+    public class AsyncInnDbContext : IdentityDbContext<ApplicationUser>// it's a bradige between our app and the DB , allowing us to interacte with the DB. entry point for interacting with the db to perform operations 
+    {// I updated the DbContext to IdentityDbContext deal with DB in context of using user authentication and authrization. 
         public AsyncInnDbContext(DbContextOptions options) : base(options)
         {
 
@@ -14,6 +15,9 @@ namespace Async_Inn.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //this calling setsup many things related to the user roles and the other identity related data
+            base.OnModelCreating(modelBuilder);
+
             //composite key associations
             modelBuilder.Entity<HotelRoom>().HasKey(x => new { x.HotelId, x.RoomNumber });
             modelBuilder.Entity<RoomAmenity>().HasKey(x => new { x.RoomId, x.AmenityId });
