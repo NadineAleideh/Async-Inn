@@ -64,11 +64,11 @@ namespace Async_Inn.Models.Services
             var amenity = await _context.Amenities.FindAsync(id);
             if (amenity != null)
             {
-                // Remove all associated RoomAmenities
-                foreach (var roomAmenity in amenity.RoomAmenities.ToList())
-                {
-                    _context.RoomAmenities.Remove(roomAmenity);
-                }
+                //// Remove all associated RoomAmenities
+                //foreach (var roomAmenity in amenity.RoomAmenities.ToList())
+                //{
+                //    _context.RoomAmenities.Remove(roomAmenity);
+                //}
 
                 // Remove the Amenity itself
                 _context.Amenities.Remove(amenity);
