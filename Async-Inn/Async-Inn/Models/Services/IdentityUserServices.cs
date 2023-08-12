@@ -3,6 +3,7 @@ using Async_Inn.Models.DTOs;
 using Async_Inn.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Security.Claims;
 
 namespace Async_Inn.Models.Services
 {
@@ -11,42 +12,72 @@ namespace Async_Inn.Models.Services
         //inject user manager service it's help us to manage related actions (CRUD), also it will do all the validations for us
         private UserManager<ApplicationUser> userManager;
 
-        public IdentityUserServices(UserManager<ApplicationUser> manager)
+        private JwtTokenService tokenService;
+        public IdentityUserServices(UserManager<ApplicationUser> manager, JwtTokenService tokenService)
         {
             userManager = manager;
+            this.tokenService = tokenService;
         }
-        public async Task<UserDTO> Register(RegisterUserDTO RegisterUserDTO, ModelStateDictionary modelState)
+        public async Task<UserDTO> Register(RegisterUserDTO RegisterUserDTO, ModelStateDictionary modelState, ClaimsPrincipal User)
         {
-            var user = new ApplicationUser
-            {
-                UserName = RegisterUserDTO.Username,
-                Email = RegisterUserDTO.Email,
-                PhoneNumber = RegisterUserDTO.PhoneNumber
-            };
+            bool isDistrictManager = User.IsInRole("District Manager");
+            bool isPropertyManager = User.IsInRole("Property Manager");
 
-            //now I will add the above new user info and create new user by the usermanager
-            var result = await userManager.CreateAsync(user, RegisterUserDTO.Password);
-
-            if (result.Succeeded)
+            if (isDistrictManager || (isPropertyManager && RegisterUserDTO.Roles.Contains("Agent")))
             {
-                return new UserDTO
+                var user = new ApplicationUser
                 {
-                    Id = user.Id,
-                    Username = user.UserName
+                    UserName = RegisterUserDTO.Username,
+                    Email = RegisterUserDTO.Email,
+                    PhoneNumber = RegisterUserDTO.PhoneNumber
                 };
-            }
 
-            foreach (var error in result.Errors)
+                //now I will add the above new user info and create new user by the usermanager
+                var result = await userManager.CreateAsync(user, RegisterUserDTO.Password);
+
+                if (result.Succeeded)
+                {
+                    // Assign roles based on role-specific conditions
+                    if (isDistrictManager)
+                    {
+                        await userManager.AddToRolesAsync(user, RegisterUserDTO.Roles);
+                    }
+                    else if (isPropertyManager && RegisterUserDTO.Roles.Contains("Agent"))
+                    {
+                        await userManager.AddToRolesAsync(user, new[] { "Agent" });
+                    }
+
+
+                    return new UserDTO
+                    {
+                        Id = user.Id,
+                        Username = user.UserName,
+                        Token = await tokenService.GetToken(user, System.TimeSpan.FromSeconds(60)),
+                        Roles = await userManager.GetRolesAsync(user)
+                    };
+                }
+                else
+                {
+
+
+                    foreach (var error in result.Errors)
+                    {
+                        var errorKey = error.Code.Contains("Password") ? nameof(RegisterUserDTO.Password) :
+                            error.Code.Contains("Email") ? nameof(RegisterUserDTO.Email) :
+                            error.Code.Contains("Username") ? nameof(RegisterUserDTO.Username) :
+                            "";
+
+                        modelState.AddModelError(errorKey, error.Description);
+                    }
+                    return null; // Return some appropriate response for a failed user creation
+                }
+            }
+            else
             {
-                var errorKey = error.Code.Contains("Password") ? nameof(RegisterUserDTO.Password) :
-                    error.Code.Contains("Email") ? nameof(RegisterUserDTO.Email) :
-                    error.Code.Contains("Username") ? nameof(RegisterUserDTO.Username) :
-                    "";
-
-                modelState.AddModelError(errorKey, error.Description);
+                modelState.AddModelError("", "You don't have permission to create this type of account.");
+                return null;
             }
 
-            return null;
         }
 
         public async Task<UserDTO> Authenticate(string username, string password)
@@ -57,11 +88,37 @@ namespace Async_Inn.Models.Services
 
             if (validPassword)
             {
-                return new UserDTO { Id = user.Id, Username = user.UserName };
+                return
+                    new UserDTO
+                    {
+                        Id = user.Id,
+                        Username = user.UserName,
+                        Token = await tokenService.GetToken(user, System.TimeSpan.FromSeconds(60)),
+                        Roles = await userManager.GetRolesAsync(user)
+                    };
             }
 
             return null;
 
         }
+
+
+
+        public async Task<UserDTO> GetUser(ClaimsPrincipal principal)
+        {
+            var user = await userManager.GetUserAsync(principal);
+
+            return new UserDTO
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Token = await tokenService.GetToken(user, System.TimeSpan.FromSeconds(60)),
+                Roles = await userManager.GetRolesAsync(user)
+            };
+
+
+
+        }
+
     }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "dejLUWVGQcKq+oyZxafiT3DHfhK/XrwSe+1j1o3htS42sQbc9ErzkYhSeL0gR3uG8LXfFlDclqAxD1T0brG+gg==",
+  "dgSpecHash": "yBAIUjXnMumYwFGml6ObxG9FeJsw9i9zpA+o928ygRDfx6WFUbYc2wu7rzWWBweXK2dUi86D+YjqxmXooU7Khg==",
   "success": true,
   "projectFilePath": "E:\\DotNet\\Async-Inn\\Async-Inn\\TestAsyncInn\\TestAsyncInn.csproj",
   "expectedPackageFiles": [
@@ -57,6 +57,7 @@
     "C:\\Users\\Dell\\.nuget\\packages\\humanizer.core.zh-cn\\2.14.1\\humanizer.core.zh-cn.2.14.1.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.10\\microsoft.aspnetcore.authentication.jwtbearer.7.0.10.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\7.0.9\\microsoft.aspnetcore.cryptography.internal.7.0.9.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.9\\microsoft.aspnetcore.cryptography.keyderivation.7.0.9.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\7.0.9\\microsoft.aspnetcore.identity.entityframeworkcore.7.0.9.nupkg.sha512",

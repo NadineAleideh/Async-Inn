@@ -2,6 +2,7 @@ using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
 using Async_Inn.Models.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -38,6 +39,19 @@ namespace Async_Inn
             builder.Services.AddScoped<IRoom, RoomServices>();
             builder.Services.AddScoped<IHotel, HotelServices>();
             builder.Services.AddScoped<IHotelRoom, HotelRoomServices>();
+            builder.Services.AddScoped<JwtTokenService>();
+
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                // Tell the authenticaion scheme "how/where" to validate the token + secret
+                options.TokenValidationParameters = JwtTokenService.GetValidationPerameters(builder.Configuration);
+            });
 
 
             builder.Services.AddSwaggerGen(options =>
@@ -51,6 +65,10 @@ namespace Async_Inn
 
 
             var app = builder.Build();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
 
             app.UseSwagger(aptions =>
             {

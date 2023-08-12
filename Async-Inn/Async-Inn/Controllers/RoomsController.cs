@@ -9,6 +9,8 @@ using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
 using Async_Inn.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Async_Inn.Controllers
 {
@@ -24,6 +26,8 @@ namespace Async_Inn.Controllers
         }
 
 
+
+        [Authorize(Roles = "District Manager", Policy = "Create")]
         [HttpPost]
         public async Task<ActionResult<RoomDTO>> PostRoom(RoomDTO roomDTO)
         {
@@ -33,6 +37,8 @@ namespace Async_Inn.Controllers
 
 
 
+
+        [Authorize(Roles = "District Manager", Policy = "Update")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoom(int id, RoomDTO roomDTO)
         {
@@ -46,12 +52,22 @@ namespace Async_Inn.Controllers
         }
 
 
+
+
+
+        [Authorize(Roles = "District Manager", Policy = "Delete")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoom(int id)
         {
             await _context.DeleteRoom(id);
             return Ok("Room deleted Successfully!");
         }
+
+
+
+
+        [AllowAnonymous]
+        [Authorize(Roles = "District Manager", Policy = "Read")]
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms()
@@ -64,6 +80,12 @@ namespace Async_Inn.Controllers
             return Ok(rooms);
         }
 
+
+
+
+
+        [AllowAnonymous]
+        [Authorize(Roles = "District Manager", Policy = "Read")]
 
         [HttpGet("{id}")]
         public async Task<ActionResult<RoomDTO>> GetRoomById(int id)
@@ -82,6 +104,8 @@ namespace Async_Inn.Controllers
 
         //Adds an amenity to a room
 
+
+        [Authorize(Roles = "District Manager , Property Manager, Agent", Policy = "Create")]
         [HttpPost("{roomId}/Amenity/{amenityId}")]
         public async Task<IActionResult> AddAmenityToRoom(int roomId, int amenityId)
         {
@@ -98,6 +122,8 @@ namespace Async_Inn.Controllers
 
 
         //removes an amenity from a room
+
+        [Authorize(Roles = "District Manager , Agent", Policy = "Delete")]
         [HttpDelete("{roomId}/Amenity/{amenityId}")]
         public async Task<IActionResult> RemoveAmenityFromRoom(int roomId, int amenityId)
         {

@@ -9,6 +9,8 @@ using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
 using Async_Inn.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Async_Inn.Controllers
 {
@@ -22,12 +24,24 @@ namespace Async_Inn.Controllers
             _context = context;
         }
 
+
+
+
+
+        [Authorize(Roles = "District Manager", Policy = "Create")]
+
         [HttpPost]
         public async Task<ActionResult<HotelDTO>> PostHotel(HotelDTO hotelDTO)
         {
             var createdHotel = await _context.CreateHotel(hotelDTO);
             return Ok(createdHotel);
         }
+
+
+
+
+
+        [Authorize(Roles = "District Manager", Policy = "Update")]
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHotel(int id, HotelDTO hotelDTO)
@@ -41,6 +55,13 @@ namespace Async_Inn.Controllers
             return Ok(updatedHotel);
         }
 
+
+
+
+
+
+        [Authorize(Roles = "District Manager", Policy = "Delete")]
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotel(int id)
         {
@@ -48,12 +69,27 @@ namespace Async_Inn.Controllers
             return Ok("Hotel Deleted Successfully!");
         }
 
+
+
+
+
+        [AllowAnonymous]
+        [Authorize(Roles = "District Manager", Policy = "Read")]
+
         [HttpGet]
         public async Task<ActionResult<List<HotelDTO>>> GetAllHotels()
         {
             var hotels = await _context.GetAllHotels();
             return Ok(hotels);
         }
+
+
+
+
+
+
+        [AllowAnonymous]
+        [Authorize(Roles = "District Manager", Policy = "Read")]
 
         [HttpGet("{id}")]
         public async Task<ActionResult<HotelDTO>> GetHotelById(int id)
@@ -66,6 +102,12 @@ namespace Async_Inn.Controllers
 
             return Ok(hotel);
         }
+
+
+
+
+
+        [AllowAnonymous]
 
         [HttpGet("byName/{name}")]
         public async Task<ActionResult<HotelDTO>> GetHotelByName(string name)

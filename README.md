@@ -12,6 +12,7 @@
 | 16  | DTOs | 31/7/2023      |
 | 17  | Testing and Swagger and Deployment | 5/8/2023      |
 | 18  | Identity | 8/8/2023      |
+| 19  | JWT authorize, claims and roles | 8/8/2023      |
 
 ## Description
 
@@ -67,6 +68,19 @@ ASP.NET Core Identity was created to help with the security and management of us
 
 ![Async Inn login](./assets/login1.PNG)
 ![Async Inn login](./assets/login2.PNG)
+
+
+## JWT authorize, claims and roles
+
+I added an JWT service in order to create a token for any user when he register or sign in and added a jwt secret json file in the configuration file to encrypt it, then I added an authorization in the program file to make the policy take the claims that seeds in the dbcontext. Also, I seed 4 roles in the database and each one has own claims policy.
+
+In the controller I modified the routes :
+
+- The district manager can make full CRUD operation on all routes and also can create accounts for all roles
+- The poperty manager can add read update the hotel rooms to hotel and the amineties to room, and also can make a agent account only
+- The Agent role can update and add hotelroom to hotel and add/ delete amenites to room and thats all
+- The annyoums user can only read from all routes
+
 
 ## architecture 
 

@@ -312,6 +312,36 @@ namespace Async_Inn.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "district manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "District Manager",
+                            NormalizedName = "DISTRICT MANAGER"
+                        },
+                        new
+                        {
+                            Id = "property manager",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Property Manager",
+                            NormalizedName = "PROPERTY MANAGER"
+                        },
+                        new
+                        {
+                            Id = "agent",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Agent",
+                            NormalizedName = "AGENT"
+                        },
+                        new
+                        {
+                            Id = "anonymous users",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Anonymous users",
+                            NormalizedName = "ANONYMOUS USERS"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -337,6 +367,85 @@ namespace Async_Inn.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 12,
+                            ClaimType = "permissions",
+                            ClaimValue = "Create",
+                            RoleId = "district manager"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ClaimType = "permissions",
+                            ClaimValue = "Read",
+                            RoleId = "district manager"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ClaimType = "permissions",
+                            ClaimValue = "Update",
+                            RoleId = "district manager"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            ClaimType = "permissions",
+                            ClaimValue = "Delete",
+                            RoleId = "district manager"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            ClaimType = "permissions",
+                            ClaimValue = "Create",
+                            RoleId = "property manager"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            ClaimType = "permissions",
+                            ClaimValue = "Read",
+                            RoleId = "property manager"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            ClaimType = "permissions",
+                            ClaimValue = "Update",
+                            RoleId = "property manager"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            ClaimType = "permissions",
+                            ClaimValue = "Create",
+                            RoleId = "agent"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            ClaimType = "permissions",
+                            ClaimValue = "Read",
+                            RoleId = "agent"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            ClaimType = "permissions",
+                            ClaimValue = "Update",
+                            RoleId = "agent"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            ClaimType = "permissions",
+                            ClaimValue = "Delete",
+                            RoleId = "agent"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
