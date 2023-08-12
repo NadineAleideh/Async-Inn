@@ -260,3 +260,4 @@ E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Microsoft.AspNetCore.Id
 E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
 E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
 E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+E:\DotNet\Async-Inn\Async-Inn\Async-Inn\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

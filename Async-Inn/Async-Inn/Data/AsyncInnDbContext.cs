@@ -1,6 +1,7 @@
 ﻿using Async_Inn.Models;
 using Async_Inn.Models.DTOs;
 using Async_Inn.Models.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -85,7 +86,45 @@ namespace Async_Inn.Data
                 .WithOne(hr => hr.Room)
                 .HasForeignKey(hr => hr.RoomId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
+
+
+            SeedRole(modelBuilder, "District Manager", "Create", "Read", "Update", "Delete");
+            SeedRole(modelBuilder, "Property Manager", "Create", "Read", "Update");
+            SeedRole(modelBuilder, "Agent", "Create", "Read", "Update", "Delete");
+            SeedRole(modelBuilder, "Anonymous users");
         }
+
+
+
+        int nextId = 1;
+        private void SeedRole(ModelBuilder modelBuilder, string roleName, params string[] permissions)
+        {
+            var role = new IdentityRole()
+            {
+                Id = roleName.ToLower(),
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString()
+            };
+
+            modelBuilder.Entity<IdentityRole>().HasData(role);
+
+            var roleClaim = permissions.Select(permission =>
+            new IdentityRoleClaim<string>
+            {
+                Id = nextId++,
+                RoleId = role.Id,
+                ClaimType = "permissions",
+                ClaimValue = permission
+            }).ToArray();
+
+            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(roleClaim);
+        }
+
+
+
 
         // correspond to db tables
         public DbSet<Hotel> Hotels { get; set; }

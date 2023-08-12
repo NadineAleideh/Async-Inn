@@ -3,6 +3,7 @@ using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Async_Inn.Controllers
 {
@@ -21,11 +22,15 @@ namespace Async_Inn.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterUserDTO data)
         {
-            var user = await userService.Register(data, this.ModelState);
+            var user = await userService.Register(data, this.ModelState, User);
 
             if (ModelState.IsValid)
             {
-                return Ok(user);
+                if (user != null)
+                    return user;
+
+                else
+                    return NotFound();
             }
 
             return BadRequest(new ValidationProblemDetails(ModelState));
@@ -43,5 +48,16 @@ namespace Async_Inn.Controllers
             }
             return user;
         }
+
+
+
+        //[Authorize(Roles = "Admin")]
+        //[Authorize(Policy = "create")]
+        [HttpGet("Profile")]
+        public async Task<ActionResult<UserDTO>> Profile()
+        {
+            return Ok(await userService.GetUser(this.User));
+        }
+
     }
 }
