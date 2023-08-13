@@ -78,6 +78,46 @@ namespace Async_Inn.Models.Services
                 return null;
             }
 
+
+            //var user = new ApplicationUser
+            //{
+            //    UserName = RegisterUserDTO.Username,
+            //    Email = RegisterUserDTO.Email,
+            //    PhoneNumber = RegisterUserDTO.PhoneNumber
+            //};
+
+            ////now I will add the above new user info and create new user by the usermanager
+            //var result = await userManager.CreateAsync(user, RegisterUserDTO.Password);
+
+
+            //if (result.Succeeded)
+            //{
+            //    await userManager.AddToRolesAsync(user, RegisterUserDTO.Roles);
+            //    return new UserDTO
+            //    {
+            //        Id = user.Id,
+            //        Username = user.UserName,
+            //        Token = await tokenService.GetToken(user, System.TimeSpan.FromSeconds(60)),
+            //        Roles = await userManager.GetRolesAsync(user)
+            //    };
+
+
+            //}
+
+
+
+            //foreach (var error in result.Errors)
+            //{
+            //    var errorKey = error.Code.Contains("Password") ? nameof(RegisterUserDTO.Password) :
+            //        error.Code.Contains("Email") ? nameof(RegisterUserDTO.Email) :
+            //        error.Code.Contains("Username") ? nameof(RegisterUserDTO.Username) :
+            //        "";
+
+            //    modelState.AddModelError(errorKey, error.Description);
+            //}
+
+
+            //return null;
         }
 
         public async Task<UserDTO> Authenticate(string username, string password)
