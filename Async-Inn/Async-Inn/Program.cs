@@ -54,20 +54,27 @@ namespace Async_Inn
             });
 
 
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Create", policy => policy.RequireClaim("permissions", "Create"));
+                options.AddPolicy("Read", policy => policy.RequireClaim("permissions", "Read"));
+                options.AddPolicy("Update", policy => policy.RequireClaim("permissions", "Update"));
+                options.AddPolicy("Delete", policy => policy.RequireClaim("permissions", "Delete"));
+
+            });
+            builder.Services.AddAuthorization();
+
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo()
                 {
-                    Title = "HotelSystemm2",
+                    Title = "HotelSystem",
                     Version = "v1",
                 });
             });
 
 
             var app = builder.Build();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
 
 
             app.UseSwagger(aptions =>
@@ -77,7 +84,7 @@ namespace Async_Inn
 
             app.UseSwaggerUI(aptions =>
             {
-                aptions.SwaggerEndpoint("/api/v1/swagger.json", "HotelSystemm2");
+                aptions.SwaggerEndpoint("/api/v1/swagger.json", "HotelSystem");
                 aptions.RoutePrefix = string.Empty;
             });
             //aptions.RoutePrefix = "docs";

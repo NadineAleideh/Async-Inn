@@ -51,7 +51,7 @@ namespace Async_Inn.Controllers
 
 
 
-        //[Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         //[Authorize(Policy = "create")]
         [HttpGet("Profile")]
         public async Task<ActionResult<UserDTO>> Profile()
